@@ -12,7 +12,7 @@ extern std::map<string, std::map<string, std::map<string, Generic64BitValue>>> g
     globalEntryGroupKey["handle"][HANDLE_TYPE][HANDLE_NAME].p = (void *)CREATE_HANDLE_PROCEDURE_CALL; \
   }
 
-int frame(int recompileRequested, void * dataFromMain) {
+extern "C" int frame(int recompileRequested, void * dataFromMain) {
   int recompile = recompileRequested;
   
   // User code here
