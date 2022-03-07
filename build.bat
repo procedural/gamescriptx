@@ -1,2 +1,2 @@
 :: Just a test, currently.
-cl /EHsc main.cpp gamescriptx.cpp /link user32.lib kernel32.lib gdi32.lib comctl32.lib uxtheme.lib msimg32.lib comdlg32.lib d2d1.lib dwrite.lib ole32.lib oleaut32.lib oleacc.lib uuid.lib windowscodecs.lib shell32.lib msvcrt.lib
+clang++.exe -g -O0 -std=c++14 main.cpp gamescriptx.cpp -luser32 -lkernel32 -lgdi32 -lcomctl32 -luxtheme -lmsimg32 -lcomdlg32 -ld2d1 -ldwrite -lole32 -loleaut32 -loleacc -luuid -lwindowscodecs -lshell32 -lmsvcrt -o main.exe

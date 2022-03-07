@@ -4,3 +4,5 @@ main.exe
 main.exp
 main.lib
 main.obj
+main.ilk
+main.pdb
