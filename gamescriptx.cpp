@@ -5,7 +5,7 @@ typedef union Generic64BitValue {
   void *   p;
 } Generic64BitValue;
 
-extern std::map<string, std::map<string, std::map<string, Generic64BitValue>>> globalEntryGroupKey;
+__declspec(dllimport) std::map<string, std::map<string, std::map<string, Generic64BitValue>>> globalEntryGroupKey;
 
 #define gsxCreateHandle(HANDLE_TYPE, HANDLE_NAME, CREATE_HANDLE_PROCEDURE_CALL) \
   if (globalEntryGroupKey["handle"][HANDLE_TYPE][HANDLE_NAME].p == 0) { \
