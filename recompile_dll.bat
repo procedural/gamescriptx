@@ -1,1 +1,0 @@
-clang++.exe -g -O0 -std=c++14 -shared gamescriptx.cpp gamescript_x.lib -o gamescriptx.dll

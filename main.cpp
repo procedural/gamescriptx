@@ -8,6 +8,8 @@
 #include <string>
 #include <stdio.h>
 
+#include "x12.h"
+
 typedef union Generic64BitValue {
   int64_t  i;
   uint64_t u;
@@ -45,7 +47,7 @@ static void recompileDll() {
     FreeLibrary(gGameScriptXDll);
     gGameScriptXDll = 0;
   }
-  std::string executeOutput = systemCommandExecute("recompile_dll.bat");
+  std::string executeOutput = systemCommandExecute("compile_dll.bat");
   printf("%s\n", executeOutput.c_str());
   gGameScriptXDll = LoadLibraryA("gamescriptx.dll");
   if (gGameScriptXDll != 0) {
@@ -68,6 +70,9 @@ int main() {
   GLFWwindow * window = glfwCreateWindow(1800, 900, "Game Script X", NULL, NULL);
   glfwSetKeyCallback(window, keyCallback);
   
+  // NOTE(Constantine): To see X12 debug output, run DebugView program.
+  void * x12DebugContext = x12DebugEnable(__FILE__, __LINE__);
+  
   while (glfwWindowShouldClose(window) == 0) {
     glfwPollEvents();
     int recompile = frame == 0 ? gRecompileRequested : 0;
@@ -76,7 +81,11 @@ int main() {
     }
     gRecompileRequested = 0;
     if (recompile == 1) {
+      x12DebugReport(x12DebugContext, __FILE__, __LINE__);
       recompileDll();
     }
   }
 }
+
+#undef min
+#include "backward.cpp"

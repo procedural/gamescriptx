@@ -5,3 +5,5 @@
 *.lib
 *.ilk
 *.pdb
+!x12.dll
+!x12dll.lib
