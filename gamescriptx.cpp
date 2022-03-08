@@ -26,6 +26,8 @@ extern "C" int frame(int recompileRequested, void * dataFromMain) {
       // Destroy the handle here
     }
     // More for loops as above for other handle types here
+    
+    globalEntryGroupKey.erase("handle");
   }
   return recompile;
 }
