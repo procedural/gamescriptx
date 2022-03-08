@@ -1,8 +1,7 @@
-clang++.exe
-gamescriptx.obj
-main.exe
-main.exp
-main.lib
-main.obj
-main.ilk
-main.pdb
+*.exe
+*.dll
+*.obj
+*.exp
+*.lib
+*.ilk
+*.pdb

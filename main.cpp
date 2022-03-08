@@ -2,10 +2,11 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/include/GLFW/glfw3.h"
 #include "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/include/GLFW/glfw3native.h"
-#pragma comment(lib, "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/lib-vc2019/glfw3.lib")
+#pragma comment(lib, "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/lib-vc2019/glfw3dll.lib")
 
 #include <map>
 #include <string>
+#include <stdio.h>
 
 typedef union Generic64BitValue {
   int64_t  i;
@@ -16,20 +17,47 @@ typedef union Generic64BitValue {
 
 // Globals begin
 
-static int gRecompileRequested = 0;
+static int     (*frame)(int recompileRequested, void * dataFromMain) = 0;
+static int     gRecompileRequested = 0;
+static HMODULE gGameScriptXDll     = 0;
 
 __declspec(dllexport) std::map<std::string, std::map<std::string, std::map<std::string, Generic64BitValue>>> globalEntryGroupKey;
 
 // Globals end
+
+static std::string systemCommandExecute(std::string command) {
+  FILE * cfd = _popen(command.c_str(), "r");
+  std::string out;
+  {
+    int c = fgetc(cfd);
+    while (c != EOF) {
+      out += c;
+      c = fgetc(cfd);
+    }
+    _pclose(cfd);
+  }
+  return out;
+}
+
+static void recompileDll() {
+  frame = 0;
+  if (gGameScriptXDll != 0) {
+    FreeLibrary(gGameScriptXDll);
+    gGameScriptXDll = 0;
+  }
+  std::string executeOutput = systemCommandExecute("recompile_dll.bat");
+  printf("%s\n", executeOutput.c_str());
+  gGameScriptXDll = LoadLibraryA("gamescriptx.dll");
+  if (gGameScriptXDll != 0) {
+    frame = (int (*)(int, void *))GetProcAddress(gGameScriptXDll, "frame");
+  }
+}
 
 static void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mods) {
   if (key == GLFW_KEY_F5 && action == GLFW_PRESS) {
     gRecompileRequested = 1;
   }
 }
-
-// TODO(Constantine): Just a test, remove later.
-extern "C" int frame(int recompileRequested, void * dataFromMain);
 
 int main() {
   // NOTE(Constantine): WIP.
@@ -42,10 +70,13 @@ int main() {
   
   while (glfwWindowShouldClose(window) == 0) {
     glfwPollEvents();
-    int recompile = frame(gRecompileRequested, (void *)window);
+    int recompile = frame == 0 ? gRecompileRequested : 0;
+    if (frame != 0) {
+      recompile = frame(gRecompileRequested, (void *)window);
+    }
     gRecompileRequested = 0;
     if (recompile == 1) {
-      // TBD
+      recompileDll();
     }
   }
 }

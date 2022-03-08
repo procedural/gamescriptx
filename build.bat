@@ -1,2 +1,0 @@
-:: Just a test, currently.
-clang++.exe -g -O0 -std=c++14 main.cpp gamescriptx.cpp -luser32 -lkernel32 -lgdi32 -lcomctl32 -luxtheme -lmsimg32 -lcomdlg32 -ld2d1 -ldwrite -lole32 -loleaut32 -loleacc -luuid -lwindowscodecs -lshell32 -lmsvcrt -o main.exe

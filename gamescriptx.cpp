@@ -15,7 +15,7 @@ __declspec(dllimport) std::map<std::string, std::map<std::string, std::map<std::
     globalEntryGroupKey["handle"][HANDLE_TYPE][HANDLE_NAME].p = (void *)CREATE_HANDLE_PROCEDURE_CALL; \
   }
 
-extern "C" int frame(int recompileRequested, void * dataFromMain) {
+extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
   int recompile = recompileRequested;
   
   // User code here
