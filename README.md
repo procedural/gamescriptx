@@ -13,3 +13,4 @@
 > 5. Place the corresponding .dll next to your game.
 
 https://devblogs.microsoft.com/pix/winpixeventruntime/
+https://devblogs.microsoft.com/pix/programmatic-capture/
