@@ -30,7 +30,8 @@ static int     (*frame)(int recompileRequested, void * dataFromMain) = 0;
 static int     gRecompileRequested = 0;
 static HMODULE gGameScriptXDll     = 0;
 
-__declspec(dllexport) std::map<std::string, std::map<std::string, std::map<std::string, GenericElement>>> globalEntryGroupLabel;
+__declspec(dllexport) std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>                                  globalCache;
+__declspec(dllexport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalStorage;
 
 // Globals end
 
@@ -52,7 +53,7 @@ static void recompileDll(void * x12DebugContext) {
   if (x12DebugContext != 0) {
     x12DebugReport(x12DebugContext, __FILE__, __LINE__);
   }
-  globalEntryGroupLabel.erase("cache");
+  globalCache = {};
   frame = 0;
   if (gGameScriptXDll != 0) {
     FreeLibrary(gGameScriptXDll);

@@ -6,7 +6,7 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
   // User code here
   
   if (recompile == 1) {
-    for (auto & pair : globalEntryGroupLabel["cache"]["SomeHandleType"]) {
+    for (auto & pair : globalCache["SomeHandleType"]) {
       void * handle = pair.second.value.p;
       // Destroy the handle here
     }

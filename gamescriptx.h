@@ -19,9 +19,10 @@ typedef struct GenericElement {
   std::vector<std::string> strings;
 } GenericElement;
 
-__declspec(dllimport) std::map<std::string, std::map<std::string, std::map<std::string, GenericElement>>> globalEntryGroupLabel;
+__declspec(dllimport) std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>                                  globalCache;
+__declspec(dllimport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalStorage;
 
 #define gsxCacheHandle(CACHE_GROUP, CACHE_LABEL, CACHE_HANDLE_VALUE) \
-  if (globalEntryGroupLabel["cache"][CACHE_GROUP][CACHE_LABEL].value.p == 0) { \
-    globalEntryGroupLabel["cache"][CACHE_GROUP][CACHE_LABEL].value.p = (void *)(CACHE_HANDLE_VALUE); \
+  if (globalCache[CACHE_GROUP][CACHE_LABEL].value.p == 0) { \
+    globalCache[CACHE_GROUP][CACHE_LABEL].value.p = (void *)(CACHE_HANDLE_VALUE); \
   }
