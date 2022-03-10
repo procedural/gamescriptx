@@ -30,7 +30,7 @@ static int     (*frame)(int recompileRequested, void * dataFromMain) = 0;
 static int     gRecompileRequested = 0;
 static HMODULE gGameScriptXDll     = 0;
 
-__declspec(dllexport) std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>                                  globalCache;
+__declspec(dllexport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalCache;
 __declspec(dllexport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalStorage;
 
 // Globals end
