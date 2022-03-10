@@ -7,7 +7,7 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
   
   if (recompile == 1) {
     for (auto & pair : globalEntryGroupKey["handle"]["SomeHandleType"]) {
-      void * handle = pair.second.p;
+      void * handle = pair.second.value.p;
       // Destroy the handle here
     }
     // More for loops as above for other handle types here

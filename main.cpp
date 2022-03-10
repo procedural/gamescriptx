@@ -6,6 +6,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include <stdio.h>
 
 #include "x12.h"
@@ -17,13 +18,19 @@ typedef union Generic64BitValue {
   void *   p;
 } Generic64BitValue;
 
+typedef struct GenericElement {
+  Generic64BitValue        value;
+  std::vector<double>      numbers;
+  std::vector<std::string> strings;
+} GenericElement;
+
 // Globals begin
 
 static int     (*frame)(int recompileRequested, void * dataFromMain) = 0;
 static int     gRecompileRequested = 0;
 static HMODULE gGameScriptXDll     = 0;
 
-__declspec(dllexport) std::map<std::string, std::map<std::string, std::map<std::string, Generic64BitValue>>> globalEntryGroupKey;
+__declspec(dllexport) std::map<std::string, std::map<std::string, std::map<std::string, GenericElement>>> globalEntryGroupKey;
 
 // Globals end
 
