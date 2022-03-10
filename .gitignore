@@ -5,5 +5,7 @@
 *.lib
 *.ilk
 *.pdb
+*.ps.h
+*.vs.h
 !x12.dll
 !x12dll.lib
