@@ -24,5 +24,7 @@ __declspec(dllimport) std::map<std::string /*entry*/, std::map<std::string /*gro
 
 // NOTE(Constantine): The expected pattern for caching handles:
 // if (globalCache[CACHE_ENTRY][CACHE_GROUP][CACHE_LABEL].value.p == 0) {
-//   globalCache[CACHE_ENTRY][CACHE_GROUP][CACHE_LABEL].value.p = (void *)createHandle(...);
+//   void * handle = createHandle(...);
+//   globalCache[CACHE_ENTRY][CACHE_GROUP][CACHE_LABEL].value.p = (void *)handle;
 // }
+// void * handle = globalCache[CACHE_ENTRY][CACHE_GROUP][CACHE_LABEL].value.p;
