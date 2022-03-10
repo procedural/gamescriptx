@@ -19,9 +19,9 @@ typedef struct GenericElement {
   std::vector<std::string> strings;
 } GenericElement;
 
-__declspec(dllimport) std::map<std::string, std::map<std::string, std::map<std::string, GenericElement>>> globalEntryGroupKey;
+__declspec(dllimport) std::map<std::string, std::map<std::string, std::map<std::string, GenericElement>>> globalEntryGroupLabel;
 
-#define gsxCreateHandle(HANDLE_TYPE, HANDLE_NAME, CREATE_HANDLE_PROCEDURE_CALL) \
-  if (globalEntryGroupKey["handle"][HANDLE_TYPE][HANDLE_NAME].value.p == 0) { \
-    globalEntryGroupKey["handle"][HANDLE_TYPE][HANDLE_NAME].value.p = (void *)CREATE_HANDLE_PROCEDURE_CALL; \
+#define gsxCacheHandle(CACHE_GROUP, CACHE_LABEL, CACHE_HANDLE_VALUE) \
+  if (globalEntryGroupLabel["cache"][CACHE_GROUP][CACHE_LABEL].value.p == 0) { \
+    globalEntryGroupLabel["cache"][CACHE_GROUP][CACHE_LABEL].value.p = (void *)(CACHE_HANDLE_VALUE); \
   }

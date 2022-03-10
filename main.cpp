@@ -30,7 +30,7 @@ static int     (*frame)(int recompileRequested, void * dataFromMain) = 0;
 static int     gRecompileRequested = 0;
 static HMODULE gGameScriptXDll     = 0;
 
-__declspec(dllexport) std::map<std::string, std::map<std::string, std::map<std::string, GenericElement>>> globalEntryGroupKey;
+__declspec(dllexport) std::map<std::string, std::map<std::string, std::map<std::string, GenericElement>>> globalEntryGroupLabel;
 
 // Globals end
 
@@ -48,7 +48,11 @@ static std::string systemCommandExecute(std::string command) {
   return out;
 }
 
-static void recompileDll() {
+static void recompileDll(void * x12DebugContext) {
+  if (x12DebugContext != 0) {
+    x12DebugReport(x12DebugContext, __FILE__, __LINE__);
+  }
+  globalEntryGroupLabel.erase("cache");
   frame = 0;
   if (gGameScriptXDll != 0) {
     FreeLibrary(gGameScriptXDll);
@@ -88,8 +92,7 @@ int main() {
     }
     gRecompileRequested = 0;
     if (recompile == 1) {
-      x12DebugReport(x12DebugContext, __FILE__, __LINE__);
-      recompileDll();
+      recompileDll(x12DebugContext);
     }
   }
 }
