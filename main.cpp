@@ -51,6 +51,9 @@ static std::string systemCommandExecute(std::string command) {
 
 static void recompileDll(void * x12DebugContext) {
   {
+    // TODO(Constantine): Serialize the global storage to disk and allow to load it by dragging-and-dropping it onto a Game Script X window.
+  }
+  {
     // TODO(Constantine): Destroy all X12 handles here by iterating over all cache entries and cache handle type groups, assuming the user has finished all the threads in the frame procedure on receiving a recompile request.
   }
   if (x12DebugContext != 0) {
