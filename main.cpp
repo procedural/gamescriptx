@@ -50,6 +50,9 @@ static std::string systemCommandExecute(std::string command) {
 }
 
 static void recompileDll(void * x12DebugContext) {
+  {
+    // TODO(Constantine): Destroy all X12 handles here by iterating over all cache entries and cache handle type groups, assuming the user has finished all the threads in the frame procedure on receiving a recompile request.
+  }
   if (x12DebugContext != 0) {
     x12DebugReport(x12DebugContext, __FILE__, __LINE__);
   }
