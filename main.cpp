@@ -1,13 +1,13 @@
+#include <map>
+#include <string>
+#include <vector>
+#include <stdio.h> // For printf
+
 #define GLFW_INCLUDE_NONE
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/include/GLFW/glfw3.h"
 #include "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/include/GLFW/glfw3native.h"
 #pragma comment(lib, "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/lib-vc2019/glfw3dll.lib")
-
-#include <map>
-#include <string>
-#include <vector>
-#include <stdio.h>
 
 #include "x12.h"
 
