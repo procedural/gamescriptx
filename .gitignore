@@ -1,3 +1,6 @@
+Include/WinPixEventRuntime/*
+bin/x64/*
+*.wpix
 *.exe
 *.dll
 *.obj

@@ -11,6 +11,11 @@
 
 #include "x12.h"
 
+// NOTE(Constantine): See WinPixEventRuntime links in README.md.
+#define USE_PIX
+#include "Include/WinPixEventRuntime/pix3.h"
+#pragma comment(lib, "bin/x64/WinPixEventRuntime.lib")
+
 typedef union Generic64BitValue {
   int64_t  i;
   uint64_t u;
@@ -26,9 +31,11 @@ typedef struct GenericElement {
 
 // Globals begin
 
-static int     (*frame)(int recompileRequested, void * dataFromMain) = 0;
-static int     gRecompileRequested = 0;
-static HMODULE gFrameDll           = 0;
+static int      (*frame)(int recompileRequested, void * dataFromMain) = 0;
+static int      gRecompileRequested = 0;
+static int      gPixCaptureToggle   = 0;
+static uint64_t gPixCaptureCounter  = 0;
+static HMODULE  gFrameDll           = 0;
 
 __declspec(dllexport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalCache;
 __declspec(dllexport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalStorage;
@@ -158,11 +165,25 @@ static void recompileDll(void * x12DebugContext) {
 static void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mods) {
   if (key == GLFW_KEY_F5 && action == GLFW_PRESS) {
     gRecompileRequested = 1;
+  } else if (key == GLFW_KEY_F6 && action == GLFW_PRESS) {
+    if (gPixCaptureToggle == 0) {
+      std::wstring filename = L"pixcapture_" + std::to_wstring(gPixCaptureCounter) + L".wpix";
+      PIXCaptureParameters pixCaptureParameters = {};
+      pixCaptureParameters.GpuCaptureParameters.FileName = filename.c_str();
+      PIXBeginCapture(PIX_CAPTURE_GPU, &pixCaptureParameters);
+      gPixCaptureCounter += 1;
+      gPixCaptureToggle = 1;
+    } else {
+      PIXEndCapture(true);
+      gPixCaptureToggle = 0;
+    }
   }
 }
 
 int main() {
   // NOTE(Constantine): WIP.
+  
+  PIXLoadLatestWinPixGpuCapturerLibrary();
   
   glfwInit();
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
