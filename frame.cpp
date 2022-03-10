@@ -1,4 +1,4 @@
-#include "gamescriptx.h"
+#include "frame.h"
 
 extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
   int recompile = recompileRequested;

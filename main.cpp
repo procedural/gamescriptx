@@ -28,7 +28,7 @@ typedef struct GenericElement {
 
 static int     (*frame)(int recompileRequested, void * dataFromMain) = 0;
 static int     gRecompileRequested = 0;
-static HMODULE gGameScriptXDll     = 0;
+static HMODULE gFrameDll           = 0;
 
 __declspec(dllexport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalCache;
 __declspec(dllexport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalStorage;
@@ -58,15 +58,15 @@ static void recompileDll(void * x12DebugContext) {
   }
   globalCache = {};
   frame = 0;
-  if (gGameScriptXDll != 0) {
-    FreeLibrary(gGameScriptXDll);
-    gGameScriptXDll = 0;
+  if (gFrameDll != 0) {
+    FreeLibrary(gFrameDll);
+    gFrameDll = 0;
   }
   std::string executeOutput = systemCommandExecute("compile_dll.bat");
   printf("%s\n", executeOutput.c_str());
-  gGameScriptXDll = LoadLibraryA("gamescriptx.dll");
-  if (gGameScriptXDll != 0) {
-    frame = (int (*)(int, void *))GetProcAddress(gGameScriptXDll, "frame");
+  gFrameDll = LoadLibraryA("gamescriptx_frame.dll");
+  if (gFrameDll != 0) {
+    frame = (int (*)(int, void *))GetProcAddress(gFrameDll, "frame");
   }
 }
 
