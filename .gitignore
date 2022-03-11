@@ -1,5 +1,5 @@
-include/WinPixEventRuntime/*
 bin/x64/*
+include/WinPixEventRuntime/*
 *.wpix
 *.exe
 *.dll
