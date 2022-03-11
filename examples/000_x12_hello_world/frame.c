@@ -156,7 +156,7 @@ __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
     pipelineState.BlendState.RenderTarget[i].LogicOp               = D3D12_LOGIC_OP_NOOP;
     pipelineState.BlendState.RenderTarget[i].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
     }
-    pipelineState.SampleMask                                       = UINT_MAX;
+    pipelineState.SampleMask                                       = 0xffffffff;
     pipelineState.RasterizerState.FillMode                         = D3D12_FILL_MODE_SOLID;
     pipelineState.RasterizerState.CullMode                         = D3D12_CULL_MODE_NONE;
     pipelineState.RasterizerState.FrontCounterClockwise            = 1;
