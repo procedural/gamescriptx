@@ -3,28 +3,31 @@
 #include "program.hlsl.vs.h"
 #include "program.hlsl.ps.h"
 
-extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
+#ifdef __cplusplus
+extern "C"
+#endif
+__declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
   int recompile = recompileRequested;
   
-  X12Factory4 * factory = (X12Factory4 *)globalCache[""]["X12Factory4"]["factory"].value.p;
+  X12Factory4 * factory = globalCacheGetAsP(L"", L"X12Factory4", L"factory");
   if (factory == 0) {
     x12CreateFactory2(DXGI_CREATE_FACTORY_FLAG_DEBUG, &factory, __FILE__, __LINE__);
-    globalCache[""]["X12Factory4"]["factory"].value.p = (void *)factory;
+    globalCacheSetAsP(L"", L"X12Factory4", L"factory", factory);
   }
   
-  X12Adapter3 * adapter = (X12Adapter3 *)globalCache[""]["X12Adapter3"]["adapter"].value.p;
+  X12Adapter3 * adapter = globalCacheGetAsP(L"", L"X12Adapter3", L"adapter");
   if (adapter == 0) {
     x12FactoryEnumAdapters1(factory, 0, &adapter, __FILE__, __LINE__);
-    globalCache[""]["X12Adapter3"]["adapter"].value.p = (void *)adapter;
+    globalCacheSetAsP(L"", L"X12Adapter3", L"adapter", adapter);
   }
   
-  X12Device3 * device = (X12Device3 *)globalCache[""]["X12Device3"]["device"].value.p;
+  X12Device3 * device = globalCacheGetAsP(L"", L"X12Device3", L"device");
   if (device == 0) {
     x12CreateDevice(adapter, D3D_FEATURE_LEVEL_12_0, &device, __FILE__, __LINE__);
-    globalCache[""]["X12Device3"]["device"].value.p = (void *)device;
+    globalCacheSetAsP(L"", L"X12Device3", L"device", device);
   }
   
-  X12CommandQueue * queue = (X12CommandQueue *)globalCache[""]["X12CommandQueue"]["queue"].value.p;
+  X12CommandQueue * queue = globalCacheGetAsP(L"", L"X12CommandQueue", L"queue");
   if (queue == 0) {
     D3D12_COMMAND_QUEUE_DESC queueDescription = {};
     queueDescription.Type     = D3D12_COMMAND_LIST_TYPE_DIRECT;
@@ -33,10 +36,10 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
     queueDescription.NodeMask = 0;
     x12DeviceCreateCommandQueue(device, &queueDescription, &queue, __FILE__, __LINE__);
     x12ObjectSetName(queue, L"queue", __FILE__, __LINE__);
-    globalCache[""]["X12CommandQueue"]["queue"].value.p = (void *)queue;
+    globalCacheSetAsP(L"", L"X12CommandQueue", L"queue", queue);
   }
   
-  X12SwapChain3 * swapchain = (X12SwapChain3 *)globalCache[""]["X12SwapChain3"]["swapchain"].value.p;
+  X12SwapChain3 * swapchain = globalCacheGetAsP(L"", L"X12SwapChain3", L"swapchain");
   if (swapchain == 0) {
     DXGI_SWAP_CHAIN_DESC1 swapchainDesc = {};
     swapchainDesc.Width              = 1800; // NOTE(Constantine): Hardcoded.
@@ -52,29 +55,29 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
     swapchainDesc.AlphaMode          = DXGI_ALPHA_MODE_IGNORE;
     swapchainDesc.Flags              = 0;
     x12FactoryCreateSwapChainForHwnd(factory, queue, glfwGetWin32Window((GLFWwindow *)dataFromMain), &swapchainDesc, 0, 0, &swapchain, __FILE__, __LINE__);
-    globalCache[""]["X12SwapChain3"]["swapchain"].value.p = (void *)swapchain;
+    globalCacheSetAsP(L"", L"X12SwapChain3", L"swapchain", swapchain);
   }
   
   X12Resource * swapchainResources[2] = {};
-  swapchainResources[0] = (X12Resource *)globalCache[""]["X12Resource"]["swapchainResources[0]"].value.p;
-  swapchainResources[1] = (X12Resource *)globalCache[""]["X12Resource"]["swapchainResources[1]"].value.p;
+  swapchainResources[0] = globalCacheGetAsP(L"", L"X12Resource", L"swapchainResources[0]");
+  swapchainResources[1] = globalCacheGetAsP(L"", L"X12Resource", L"swapchainResources[1]");
   if (swapchainResources[0] == 0) {
     x12SwapChainGetBuffer(swapchain, 0, &swapchainResources[0], __FILE__, __LINE__);
     x12ObjectSetName(swapchainResources[0], L"swapchainResources[0]", __FILE__, __LINE__);
-    globalCache[""]["X12Resource"]["swapchainResources[0]"].value.p = (void *)swapchainResources[0];
+    globalCacheSetAsP(L"", L"X12Resource", L"swapchainResources[0]", swapchainResources[0]);
   }
   if (swapchainResources[1] == 0) {
     x12SwapChainGetBuffer(swapchain, 1, &swapchainResources[1], __FILE__, __LINE__);
     x12ObjectSetName(swapchainResources[1], L"swapchainResources[1]", __FILE__, __LINE__);
-    globalCache[""]["X12Resource"]["swapchainResources[1]"].value.p = (void *)swapchainResources[1];
+    globalCacheSetAsP(L"", L"X12Resource", L"swapchainResources[1]", swapchainResources[1]);
   }
   
   X12DescriptorHeap * swapchainDescriptorsCpuHeapRTV[2] = {};
-  swapchainDescriptorsCpuHeapRTV[0] = (X12DescriptorHeap *)globalCache[""]["X12DescriptorHeap"]["swapchainDescriptorsCpuHeapRTV[0]"].value.p;
-  swapchainDescriptorsCpuHeapRTV[1] = (X12DescriptorHeap *)globalCache[""]["X12DescriptorHeap"]["swapchainDescriptorsCpuHeapRTV[1]"].value.p;
+  swapchainDescriptorsCpuHeapRTV[0] = globalCacheGetAsP(L"", L"X12DescriptorHeap", L"swapchainDescriptorsCpuHeapRTV[0]");
+  swapchainDescriptorsCpuHeapRTV[1] = globalCacheGetAsP(L"", L"X12DescriptorHeap", L"swapchainDescriptorsCpuHeapRTV[1]");
   D3D12_CPU_DESCRIPTOR_HANDLE swapchainDescriptorsCpuDescriptorRTV[2] = {};
-  swapchainDescriptorsCpuDescriptorRTV[0].ptr = (size_t)globalCache[""][""]["swapchainDescriptorsCpuDescriptorRTV[0].ptr"].value.p;
-  swapchainDescriptorsCpuDescriptorRTV[1].ptr = (size_t)globalCache[""][""]["swapchainDescriptorsCpuDescriptorRTV[1].ptr"].value.p;
+  swapchainDescriptorsCpuDescriptorRTV[0].ptr = (size_t)globalCacheGetAsP(L"", L"", L"swapchainDescriptorsCpuDescriptorRTV[0].ptr");
+  swapchainDescriptorsCpuDescriptorRTV[1].ptr = (size_t)globalCacheGetAsP(L"", L"", L"swapchainDescriptorsCpuDescriptorRTV[1].ptr");
   if (swapchainDescriptorsCpuHeapRTV[0] == 0) {
     D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc = {};
     descriptorHeapDesc.Type           = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
@@ -90,8 +93,8 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
     rtvDescription.Texture2D.MipSlice   = 0;
     rtvDescription.Texture2D.PlaneSlice = 0;
     x12DeviceCreateRenderTargetView(device, swapchainResources[0], &rtvDescription, swapchainDescriptorsCpuDescriptorRTV[0], __FILE__, __LINE__);
-    globalCache[""]["X12DescriptorHeap"]["swapchainDescriptorsCpuHeapRTV[0]"].value.p = (void *)swapchainDescriptorsCpuHeapRTV[0];
-    globalCache[""][""]["swapchainDescriptorsCpuDescriptorRTV[0].ptr"].value.p = (void *)swapchainDescriptorsCpuDescriptorRTV[0].ptr;
+    globalCacheSetAsP(L"", L"X12DescriptorHeap", L"swapchainDescriptorsCpuHeapRTV[0]", swapchainDescriptorsCpuHeapRTV[0]);
+    globalCacheSetAsP(L"", L"", L"swapchainDescriptorsCpuDescriptorRTV[0].ptr", (void *)swapchainDescriptorsCpuDescriptorRTV[0].ptr);
   }
   if (swapchainDescriptorsCpuHeapRTV[1] == 0) {
     D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc = {};
@@ -108,13 +111,13 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
     rtvDescription.Texture2D.MipSlice   = 0;
     rtvDescription.Texture2D.PlaneSlice = 0;
     x12DeviceCreateRenderTargetView(device, swapchainResources[1], &rtvDescription, swapchainDescriptorsCpuDescriptorRTV[1], __FILE__, __LINE__);
-    globalCache[""]["X12DescriptorHeap"]["swapchainDescriptorsCpuHeapRTV[1]"].value.p = (void *)swapchainDescriptorsCpuHeapRTV[1];
-    globalCache[""][""]["swapchainDescriptorsCpuDescriptorRTV[1].ptr"].value.p = (void *)swapchainDescriptorsCpuDescriptorRTV[1].ptr;
+    globalCacheSetAsP(L"", L"X12DescriptorHeap", L"swapchainDescriptorsCpuHeapRTV[1]", swapchainDescriptorsCpuHeapRTV[1]);
+    globalCacheSetAsP(L"", L"", L"swapchainDescriptorsCpuDescriptorRTV[1].ptr", (void *)swapchainDescriptorsCpuDescriptorRTV[1].ptr);
   }
   
-  X12RootSignature * parametersRootSignature = (X12RootSignature *)globalCache[""]["X12RootSignature"]["parametersRootSignature"].value.p;
-  X12Blob *          parametersBlob          = (X12Blob *)globalCache[""]["X12Blob"]["parametersBlob"].value.p;
-  X12Blob *          parametersBlobError     = (X12Blob *)globalCache[""]["X12Blob"]["parametersBlobError"].value.p;
+  X12RootSignature * parametersRootSignature = globalCacheGetAsP(L"", L"X12RootSignature", L"parametersRootSignature");
+  X12Blob *          parametersBlob          = globalCacheGetAsP(L"", L"X12Blob", L"parametersBlob");
+  X12Blob *          parametersBlobError     = globalCacheGetAsP(L"", L"X12Blob", L"parametersBlobError");
   if (parametersRootSignature == 0) {
     D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc = {};
     rootSignatureDesc.NumParameters     = 0;
@@ -126,12 +129,12 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
     // NOTE: Check parametersBlobError on errors here.
     x12DeviceCreateRootSignature(device, 0, x12BlobGetBufferPointer(parametersBlob), x12BlobGetBufferSize(parametersBlob), &parametersRootSignature, __FILE__, __LINE__);
     x12ObjectSetName(parametersRootSignature, L"parametersRootSignature", __FILE__, __LINE__);
-    globalCache[""]["X12RootSignature"]["parametersRootSignature"].value.p = (void *)parametersRootSignature;
-    globalCache[""]["X12Blob"]["parametersBlob"].value.p = (void *)parametersBlob;
-    globalCache[""]["X12Blob"]["parametersBlobError"].value.p = (void *)parametersBlobError;
+    globalCacheSetAsP(L"", L"X12RootSignature", L"parametersRootSignature", parametersRootSignature);
+    globalCacheSetAsP(L"", L"X12Blob", L"parametersBlob", parametersBlob);
+    globalCacheSetAsP(L"", L"X12Blob", L"parametersBlobError", parametersBlobError);
   }
   
-  X12PipelineState * pipeline = (X12PipelineState *)globalCache[""]["X12PipelineState"]["pipeline"].value.p;
+  X12PipelineState * pipeline = globalCacheGetAsP(L"", L"X12PipelineState", L"pipeline");
   if (pipeline == 0) {
     D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineState = {};
     pipelineState.pRootSignature                                   = parametersRootSignature;
@@ -199,15 +202,15 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
     pipelineState.Flags                                            = D3D12_PIPELINE_STATE_FLAG_NONE;
     x12DeviceCreateGraphicsPipelineState(device, &pipelineState, &pipeline, __FILE__, __LINE__);
     x12ObjectSetName(pipeline, L"pipeline", __FILE__, __LINE__);
-    globalCache[""]["X12PipelineState"]["pipeline"].value.p = (void *)pipeline;
+    globalCacheSetAsP(L"", L"X12PipelineState", L"pipeline", pipeline);
   }
   
   X12CommandAllocator * commandListsAllocator[2] = {};
-  commandListsAllocator[0] = (X12CommandAllocator *)globalCache[""]["X12CommandAllocator"]["commandListsAllocator[0]"].value.p;
-  commandListsAllocator[1] = (X12CommandAllocator *)globalCache[""]["X12CommandAllocator"]["commandListsAllocator[1]"].value.p;
+  commandListsAllocator[0] = globalCacheGetAsP(L"", L"X12CommandAllocator", L"commandListsAllocator[0]");
+  commandListsAllocator[1] = globalCacheGetAsP(L"", L"X12CommandAllocator", L"commandListsAllocator[1]");
   X12CommandList * commandLists[2] = {};
-  commandLists[0] = (X12CommandList *)globalCache[""]["X12CommandList"]["commandLists[0]"].value.p;
-  commandLists[1] = (X12CommandList *)globalCache[""]["X12CommandList"]["commandLists[1]"].value.p;
+  commandLists[0] = globalCacheGetAsP(L"", L"X12CommandList", L"commandLists[0]");
+  commandLists[1] = globalCacheGetAsP(L"", L"X12CommandList", L"commandLists[1]");
   if (commandListsAllocator[0] == 0) {
     D3D12_COMMAND_LIST_TYPE commandListType = D3D12_COMMAND_LIST_TYPE_DIRECT;
     x12DeviceCreateCommandAllocator(device, commandListType, &commandListsAllocator[0], __FILE__, __LINE__);
@@ -215,8 +218,8 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
     x12CommandListClose(commandLists[0], __FILE__, __LINE__);
     x12ObjectSetName(commandListsAllocator[0], L"commandListsAllocator[0]", __FILE__, __LINE__);
     x12ObjectSetName(commandLists[0], L"commandLists[0]", __FILE__, __LINE__);
-    globalCache[""]["X12CommandAllocator"]["commandListsAllocator[0]"].value.p = (void *)commandListsAllocator[0];
-    globalCache[""]["X12CommandList"]["commandLists[0]"].value.p = (void *)commandLists[0];
+    globalCacheSetAsP(L"", L"X12CommandAllocator", L"commandListsAllocator[0]", commandListsAllocator[0]);
+    globalCacheSetAsP(L"", L"X12CommandList", L"commandLists[0]", commandLists[0]);
   }
   if (commandListsAllocator[1] == 0) {
     D3D12_COMMAND_LIST_TYPE commandListType = D3D12_COMMAND_LIST_TYPE_DIRECT;
@@ -225,25 +228,25 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
     x12CommandListClose(commandLists[1], __FILE__, __LINE__);
     x12ObjectSetName(commandListsAllocator[1], L"commandListsAllocator[1]", __FILE__, __LINE__);
     x12ObjectSetName(commandLists[1], L"commandLists[1]", __FILE__, __LINE__);
-    globalCache[""]["X12CommandAllocator"]["commandListsAllocator[1]"].value.p = (void *)commandListsAllocator[1];
-    globalCache[""]["X12CommandList"]["commandLists[1]"].value.p = (void *)commandLists[1];
+    globalCacheSetAsP(L"", L"X12CommandAllocator", L"commandListsAllocator[1]", commandListsAllocator[1]);
+    globalCacheSetAsP(L"", L"X12CommandList", L"commandLists[1]", commandLists[1]);
   }
   
   X12Fence * fence[2] = {};
-  fence[0] = (X12Fence *)globalCache[""]["X12Fence"]["fence[0]"].value.p;
-  fence[1] = (X12Fence *)globalCache[""]["X12Fence"]["fence[1]"].value.p;
+  fence[0] = globalCacheGetAsP(L"", L"X12Fence", L"fence[0]");
+  fence[1] = globalCacheGetAsP(L"", L"X12Fence", L"fence[1]");
   if (fence[0] == 0) {
     x12DeviceCreateFence(device, 1, D3D12_FENCE_FLAG_NONE, &fence[0], __FILE__, __LINE__);
     x12ObjectSetName(fence[0], L"fence[0]", __FILE__, __LINE__);
-    globalCache[""]["X12Fence"]["fence[0]"].value.p = (void *)fence[0];
+    globalCacheSetAsP(L"", L"X12Fence", L"fence[0]", fence[0]);
   }
   if (fence[1] == 0) {
     x12DeviceCreateFence(device, 1, D3D12_FENCE_FLAG_NONE, &fence[1], __FILE__, __LINE__);
     x12ObjectSetName(fence[1], L"fence[1]", __FILE__, __LINE__);
-    globalCache[""]["X12Fence"]["fence[1]"].value.p = (void *)fence[1];
+    globalCacheSetAsP(L"", L"X12Fence", L"fence[1]", fence[1]);
   }
   
-  uint64_t f = globalCache[""][""]["frame"].value.u;
+  uint64_t f = globalCacheGetAsU(L"", L"", L"frame");
   
   x12FenceSetEventOnCompletion(fence[f], 1, 0, __FILE__, __LINE__);
   x12FenceSignal(fence[f], 0, __FILE__, __LINE__);
@@ -305,7 +308,7 @@ extern "C" __declspec(dllexport) int frame(int recompileRequested, void * dataFr
   f += 1;
   f %= 2;
   
-  globalCache[""][""]["frame"].value.u = f;
+  globalCacheSetAsU(L"", L"", L"frame", f);
   
   if (recompile == 1) {
     x12FenceSetEventOnCompletion(fence[0], 1, 0, __FILE__, __LINE__);
