@@ -4,9 +4,12 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/include/GLFW/glfw3.h"
 #include "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/include/GLFW/glfw3native.h"
-#pragma comment(lib, "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/lib-vc2019/glfw3dll.lib")
 
 #include "x12.h"
+
+#ifndef _countof(x)
+#define _countof(x) (sizeof(x) / sizeof((x)[0]))
+#endif
 
 #ifdef __cplusplus
 extern "C" {

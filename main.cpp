@@ -13,7 +13,7 @@
 
 // NOTE(Constantine): See WinPixEventRuntime links in README.md.
 #define USE_PIX
-#include "Include/WinPixEventRuntime/pix3.h"
+#include "include/WinPixEventRuntime/pix3.h"
 #pragma comment(lib, "bin/x64/WinPixEventRuntime.lib")
 
 typedef union Generic64BitValue {
