@@ -2,6 +2,8 @@
 
 ## WinPixEventRuntime (for `pix3.h`)
 
+https://www.nuget.org/api/v2/package/WinPixEventRuntime/
+
 https://devblogs.microsoft.com/pix/winpixeventruntime/
 
 https://devblogs.microsoft.com/pix/programmatic-capture/
