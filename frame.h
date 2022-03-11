@@ -1,9 +1,5 @@
 #pragma once
 
-#include <map>
-#include <string>
-#include <vector>
-
 #define GLFW_INCLUDE_NONE
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include "C:/github/glfw/glfw/glfw-3.3.6.bin.WIN64/include/GLFW/glfw3.h"
@@ -12,25 +8,63 @@
 
 #include "x12.h"
 
-typedef union Generic64BitValue {
-  int64_t  i;
-  uint64_t u;
-  double   d;
-  void *   p;
-} Generic64BitValue;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-typedef struct GenericElement {
-  Generic64BitValue        value;
-  std::vector<double>      numbers;
-  std::vector<std::string> strings;
-} GenericElement;
+int64_t         globalCacheGetAsI            (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+uint64_t        globalCacheGetAsU            (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+double          globalCacheGetAsD            (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+void *          globalCacheGetAsP            (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+void            globalCacheSetAsI            (const wchar_t * entry, const wchar_t * group, const wchar_t * label, int64_t value);
+void            globalCacheSetAsU            (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t value);
+void            globalCacheSetAsD            (const wchar_t * entry, const wchar_t * group, const wchar_t * label, double value);
+void            globalCacheSetAsP            (const wchar_t * entry, const wchar_t * group, const wchar_t * label, void * value);
 
-__declspec(dllimport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalCache;
-__declspec(dllimport) std::map<std::string /*entry*/, std::map<std::string /*group*/, std::map<std::string /*label*/, GenericElement>>> globalStorage;
+double          globalCacheNumbersGet        (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index);
+void            globalCacheNumbersSet        (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index, double value);
+size_t          globalCacheNumbersGetSize    (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+void            globalCacheNumbersPushBack   (const wchar_t * entry, const wchar_t * group, const wchar_t * label, double value);
+void            globalCacheNumbersPopBack    (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+int             globalCacheNumbersErase      (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index);
+
+const wchar_t * globalCacheStringsGet        (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index);
+void            globalCacheStringsSet        (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index, const wchar_t * value);
+size_t          globalCacheStringsGetSize    (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+void            globalCacheStringsPushBack   (const wchar_t * entry, const wchar_t * group, const wchar_t * label, const wchar_t * value);
+void            globalCacheStringsPopBack    (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+int             globalCacheStringsErase      (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index);
+
+int64_t         globalStorageGetAsI          (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+uint64_t        globalStorageGetAsU          (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+double          globalStorageGetAsD          (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+void *          globalStorageGetAsP          (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+void            globalStorageSetAsI          (const wchar_t * entry, const wchar_t * group, const wchar_t * label, int64_t value);
+void            globalStorageSetAsU          (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t value);
+void            globalStorageSetAsD          (const wchar_t * entry, const wchar_t * group, const wchar_t * label, double value);
+void            globalStorageSetAsP          (const wchar_t * entry, const wchar_t * group, const wchar_t * label, void * value);
+
+double          globalStorageNumbersGet      (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index);
+void            globalStorageNumbersSet      (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index, double value);
+size_t          globalStorageNumbersGetSize  (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+void            globalStorageNumbersPushBack (const wchar_t * entry, const wchar_t * group, const wchar_t * label, double value);
+void            globalStorageNumbersPopBack  (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+int             globalStorageNumbersErase    (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index);
+
+const wchar_t * globalStorageStringsGet      (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index);
+void            globalStorageStringsSet      (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index, const wchar_t * value);
+size_t          globalStorageStringsGetSize  (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+void            globalStorageStringsPushBack (const wchar_t * entry, const wchar_t * group, const wchar_t * label, const wchar_t * value);
+void            globalStorageStringsPopBack  (const wchar_t * entry, const wchar_t * group, const wchar_t * label);
+int             globalStorageStringsErase    (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index);
+
+#ifdef __cplusplus
+}
+#endif
 
 // NOTE(Constantine): The expected pattern for caching handles:
-// void * handle = globalCache[CACHE_ENTRY][CACHE_GROUP][CACHE_LABEL].value.p;
+// void * handle = globalCacheGetAsP(CACHE_ENTRY, CACHE_GROUP, CACHE_LABEL);
 // if (handle == 0) {
 //   // Create and set handle here.
-//   globalCache[CACHE_ENTRY][CACHE_GROUP][CACHE_LABEL].value.p = (void *)handle;
+//   globalCacheSetAsP(CACHE_ENTRY, CACHE_GROUP, CACHE_LABEL, (void *)handle);
 // }
