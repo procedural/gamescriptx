@@ -1,4 +1,4 @@
-Include/WinPixEventRuntime/*
+include/WinPixEventRuntime/*
 bin/x64/*
 *.wpix
 *.exe
@@ -8,7 +8,10 @@ bin/x64/*
 *.lib
 *.ilk
 *.pdb
+*.def
 *.ps.h
 *.vs.h
 !x12.dll
 !x12dll.lib
+!tcc.exe
+!libtcc.dll
