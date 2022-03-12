@@ -7,7 +7,7 @@
 
 #include "x12.h"
 
-#ifndef _countof(x)
+#ifndef _countof
 #define _countof(x) (sizeof(x) / sizeof((x)[0]))
 #endif
 
