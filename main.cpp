@@ -24,9 +24,9 @@ typedef union Generic64BitValue {
 } Generic64BitValue;
 
 typedef struct GenericElement {
-  Generic64BitValue         value;
-  std::vector<double>       numbers;
-  std::vector<std::wstring> strings;
+  Generic64BitValue              value;
+  std::vector<Generic64BitValue> numbers;
+  std::vector<std::wstring>      strings;
 } GenericElement;
 
 // Globals begin
@@ -102,14 +102,28 @@ extern "C" __declspec(dllexport) double globalCacheNumbersGet(const wchar_t * en
   std::wstring _entry = entry;
   std::wstring _group = group;
   std::wstring _label = label;
-  return globalCache[_entry][_group][_label].numbers[index];
+  return globalCache[_entry][_group][_label].numbers[index].d;
+}
+
+extern "C" __declspec(dllexport) void * globalCacheNumbersGetAsP(const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index) {
+  std::wstring _entry = entry;
+  std::wstring _group = group;
+  std::wstring _label = label;
+  return globalCache[_entry][_group][_label].numbers[index].p;
 }
 
 extern "C" __declspec(dllexport) void globalCacheNumbersSet(const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index, double value) {
   std::wstring _entry = entry;
   std::wstring _group = group;
   std::wstring _label = label;
-  globalCache[_entry][_group][_label].numbers[index] = value;
+  globalCache[_entry][_group][_label].numbers[index].d = value;
+}
+
+extern "C" __declspec(dllexport) void globalCacheNumbersSetAsP(const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index, void * value) {
+  std::wstring _entry = entry;
+  std::wstring _group = group;
+  std::wstring _label = label;
+  globalCache[_entry][_group][_label].numbers[index].p = value;
 }
 
 extern "C" __declspec(dllexport) size_t globalCacheNumbersGetSize(const wchar_t * entry, const wchar_t * group, const wchar_t * label) {
@@ -123,7 +137,18 @@ extern "C" __declspec(dllexport) void globalCacheNumbersPushBack(const wchar_t *
   std::wstring _entry = entry;
   std::wstring _group = group;
   std::wstring _label = label;
-  globalCache[_entry][_group][_label].numbers.push_back(value);
+  Generic64BitValue _value;
+  _value.d = value;
+  globalCache[_entry][_group][_label].numbers.push_back(_value);
+}
+
+extern "C" __declspec(dllexport) void globalCacheNumbersPushBackAsP(const wchar_t * entry, const wchar_t * group, const wchar_t * label, void * value) {
+  std::wstring _entry = entry;
+  std::wstring _group = group;
+  std::wstring _label = label;
+  Generic64BitValue _value;
+  _value.p = value;
+  globalCache[_entry][_group][_label].numbers.push_back(_value);
 }
 
 extern "C" __declspec(dllexport) void globalCacheNumbersPopBack(const wchar_t * entry, const wchar_t * group, const wchar_t * label) {
@@ -246,14 +271,28 @@ extern "C" __declspec(dllexport) double globalStorageNumbersGet(const wchar_t * 
   std::wstring _entry = entry;
   std::wstring _group = group;
   std::wstring _label = label;
-  return globalStorage[_entry][_group][_label].numbers[index];
+  return globalStorage[_entry][_group][_label].numbers[index].d;
+}
+
+extern "C" __declspec(dllexport) void * globalStorageNumbersGetAsP(const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index) {
+  std::wstring _entry = entry;
+  std::wstring _group = group;
+  std::wstring _label = label;
+  return globalStorage[_entry][_group][_label].numbers[index].p;
 }
 
 extern "C" __declspec(dllexport) void globalStorageNumbersSet(const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index, double value) {
   std::wstring _entry = entry;
   std::wstring _group = group;
   std::wstring _label = label;
-  globalStorage[_entry][_group][_label].numbers[index] = value;
+  globalStorage[_entry][_group][_label].numbers[index].d = value;
+}
+
+extern "C" __declspec(dllexport) void globalStorageNumbersSetAsP(const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index, void * value) {
+  std::wstring _entry = entry;
+  std::wstring _group = group;
+  std::wstring _label = label;
+  globalStorage[_entry][_group][_label].numbers[index].p = value;
 }
 
 extern "C" __declspec(dllexport) size_t globalStorageNumbersGetSize(const wchar_t * entry, const wchar_t * group, const wchar_t * label) {
@@ -267,7 +306,18 @@ extern "C" __declspec(dllexport) void globalStorageNumbersPushBack(const wchar_t
   std::wstring _entry = entry;
   std::wstring _group = group;
   std::wstring _label = label;
-  globalStorage[_entry][_group][_label].numbers.push_back(value);
+  Generic64BitValue _value;
+  _value.d = value;
+  globalStorage[_entry][_group][_label].numbers.push_back(_value);
+}
+
+extern "C" __declspec(dllexport) void globalStorageNumbersPushBackAsP(const wchar_t * entry, const wchar_t * group, const wchar_t * label, void * value) {
+  std::wstring _entry = entry;
+  std::wstring _group = group;
+  std::wstring _label = label;
+  Generic64BitValue _value;
+  _value.p = value;
+  globalStorage[_entry][_group][_label].numbers.push_back(_value);
 }
 
 extern "C" __declspec(dllexport) void globalStorageNumbersPopBack(const wchar_t * entry, const wchar_t * group, const wchar_t * label) {
@@ -330,6 +380,32 @@ extern "C" __declspec(dllexport) int globalStorageStringsErase(const wchar_t * e
   return output;
 }
 
+extern "C" __declspec(dllexport) const wchar_t * wstrjoin(const wchar_t * globalCacheEntry, const wchar_t * a, const wchar_t * b) {
+  std::wstring _entry = globalCacheEntry;
+  std::wstring _a = a;
+  std::wstring _b = b;
+  std::wstring * _c = new(std::nothrow) std::wstring();
+  if (_c == 0) {
+    return 0;
+  }
+  _c[0] = _a + _b;
+  Generic64BitValue _value;
+  _value.p = (void *)_c;
+  globalCache[_entry][L"wstrjoin"][L""].numbers.push_back(_value);
+  const wchar_t * _cstr = _c->c_str();
+  return _cstr;
+}
+
+extern "C" __declspec(dllexport) void wstrjoinClearCache(const wchar_t * globalCacheEntry) {
+  std::wstring _entry = globalCacheEntry;
+  std::vector<Generic64BitValue> numbers = globalCache[_entry][L"wstrjoin"][L""].numbers;
+  for (auto & number : numbers) {
+    std::wstring * pointer = (std::wstring *)number.p;
+    delete pointer;
+  }
+  globalCache[_entry][L"wstrjoin"][L""].numbers = {};
+}
+
 static std::string systemCommandExecute(std::string command) {
   FILE * cfd = _popen(command.c_str(), "r");
   std::string out;
@@ -349,7 +425,7 @@ static void recompileDll(void * x12DebugContext) {
     // TODO(Constantine): Serialize the global storage to disk and allow to load it by dragging-and-dropping it onto a Game Script X window.
   }
   {
-    // NOTE(Constantine): Destroy all X12 handles here by iterating over all cache entries and cache handle type groups, assuming the user has finished all the threads in the frame procedure on receiving a recompile request.
+    // NOTE(Constantine): Destroy all X12 handles here by iterating over all cache entries and cache handle type groups.
     for (auto & entryPair : globalCache) {
       std::map<std::wstring, GenericElement> factories                  = entryPair.second[L"X12Factory4"];
       std::map<std::wstring, GenericElement> adapters                   = entryPair.second[L"X12Adapter3"];
@@ -436,6 +512,16 @@ static void recompileDll(void * x12DebugContext) {
   if (x12DebugContext != 0) {
     x12DebugReport(x12DebugContext, __FILE__, __LINE__);
   }
+  {
+    // NOTE(Constantine): Delete all wstrjoin leftovers.
+    for (auto & entryPair : globalCache) {
+      std::vector<Generic64BitValue> numbers = entryPair.second[L"wstrjoin"][L""].numbers;
+      for (auto & number : numbers) {
+        std::wstring * pointer = (std::wstring *)number.p;
+        delete pointer;
+      }
+    }
+  }
   globalCache = {};
   frame = 0;
   if (gFrameDll != 0) {
@@ -490,6 +576,7 @@ int main() {
     }
     gRecompileRequested = 0;
     if (recompile == 1) {
+      // NOTE(Constantine): Assuming the user has finished all the threads in the frame procedure on receiving a recompile request.
       recompileDll(x12DebugContext);
     }
   }
