@@ -396,7 +396,7 @@ extern "C" __declspec(dllexport) const wchar_t * wstrjoin(const wchar_t * global
   return _cstr;
 }
 
-extern "C" __declspec(dllexport) void wstrjoinClearCache(const wchar_t * globalCacheEntry) {
+extern "C" __declspec(dllexport) void wstrjoinDeleteCache(const wchar_t * globalCacheEntry) {
   std::wstring _entry = globalCacheEntry;
   std::vector<Generic64BitValue> numbers = globalCache[_entry][L"wstrjoin"][L""].numbers;
   for (auto & number : numbers) {

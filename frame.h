@@ -68,7 +68,7 @@ void            globalStorageStringsPopBack     (const wchar_t * entry, const wc
 int             globalStorageStringsErase       (const wchar_t * entry, const wchar_t * group, const wchar_t * label, uint64_t index);
 
 const wchar_t * wstrjoin                        (const wchar_t * globalCacheEntry, const wchar_t * a, const wchar_t * b);
-void            wstrjoinClearCache              (const wchar_t * globalCacheEntry);
+void            wstrjoinDeleteCache             (const wchar_t * globalCacheEntry);
 
 #ifdef __cplusplus
 }
