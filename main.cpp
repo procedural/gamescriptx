@@ -1,6 +1,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <ctime>
 #include <stdio.h> // For printf
 
 #define GLFW_INCLUDE_NONE
@@ -34,7 +35,6 @@ typedef struct GenericElement {
 static int      (*frame)(int recompileRequested, void * dataFromMain) = 0;
 static int      gRecompileRequested = 0;
 static int      gPixCaptureToggle   = 0;
-static uint64_t gPixCaptureCounter  = 0;
 static HMODULE  gFrameDll           = 0;
 
 std::map<std::wstring /*entry*/, std::map<std::wstring /*group*/, std::map<std::wstring /*label*/, GenericElement>>> globalCache;
@@ -536,16 +536,33 @@ static void recompileDll(void * x12DebugContext) {
   }
 }
 
+static std::wstring getTimeWstring() {
+  struct tm buf;
+  time_t t = time(0);
+  localtime_s(&buf, &t);
+  wchar_t date[26];
+  _wasctime_s(date, 26, &buf);
+  std::wstring out = date;
+  for (size_t i = 0, size = out.size(); i < size; i += 1) {
+    if (out[i] == L' ') {
+      out[i] = L'_';
+    } else if (out[i] == L':') {
+      out[i] = L'-';
+    }
+  }
+  out.pop_back();
+  return out;
+}
+
 static void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mods) {
   if (key == GLFW_KEY_F5 && action == GLFW_PRESS) {
     gRecompileRequested = 1;
   } else if (key == GLFW_KEY_F6 && action == GLFW_PRESS) {
     if (gPixCaptureToggle == 0) {
-      std::wstring filename = L"pixcapture_" + std::to_wstring(gPixCaptureCounter) + L".wpix";
+      std::wstring filename = L"pixcapture_" + getTimeWstring() + L".wpix";
       PIXCaptureParameters pixCaptureParameters = {};
       pixCaptureParameters.GpuCaptureParameters.FileName = filename.c_str();
       PIXBeginCapture(PIX_CAPTURE_GPU, &pixCaptureParameters);
-      gPixCaptureCounter += 1;
       gPixCaptureToggle = 1;
     } else {
       PIXEndCapture(true);
