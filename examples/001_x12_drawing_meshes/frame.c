@@ -383,8 +383,8 @@ __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
     D3D12_RESOURCE_DESC desc = {};
     desc.Dimension          = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
     desc.Alignment          = 0;
-    desc.Width              = 1900; // NOTE(Constantine): Hardcoded.
-    desc.Height             = 1900; // NOTE(Constantine): Hardcoded.
+    desc.Width              = 1800; // NOTE(Constantine): Hardcoded.
+    desc.Height             = 900;  // NOTE(Constantine): Hardcoded.
     desc.DepthOrArraySize   = 1;
     desc.MipLevels          = 1;
     desc.Format             = DXGI_FORMAT_D32_FLOAT;
