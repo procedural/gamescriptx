@@ -427,82 +427,112 @@ static void recompileDll(void * x12DebugContext) {
   {
     // NOTE(Constantine): Destroy all X12 handles here by iterating over all cache entries and cache handle type groups.
     for (auto & entryPair : globalCache) {
-      std::map<std::wstring, GenericElement> factories                  = entryPair.second[L"X12Factory4"];
-      std::map<std::wstring, GenericElement> adapters                   = entryPair.second[L"X12Adapter3"];
-      std::map<std::wstring, GenericElement> devices                    = entryPair.second[L"X12Device3"];
-      std::map<std::wstring, GenericElement> heaps                      = entryPair.second[L"X12Heap"];
-      std::map<std::wstring, GenericElement> resources                  = entryPair.second[L"X12Resource"];
-      std::map<std::wstring, GenericElement> descriptorHeaps            = entryPair.second[L"X12DescriptorHeap"];
-      std::map<std::wstring, GenericElement> blobs                      = entryPair.second[L"X12Blob"];
-      std::map<std::wstring, GenericElement> rootSignatures             = entryPair.second[L"X12RootSignature"];
-      std::map<std::wstring, GenericElement> rootSignatureDeserializers = entryPair.second[L"X12RootSignatureDeserializer"];
-      std::map<std::wstring, GenericElement> pipelineStates             = entryPair.second[L"X12PipelineState"];
-      std::map<std::wstring, GenericElement> fences                     = entryPair.second[L"X12Fence"];
-      std::map<std::wstring, GenericElement> commandQueues              = entryPair.second[L"X12CommandQueue"];
-      std::map<std::wstring, GenericElement> commandAllocators          = entryPair.second[L"X12CommandAllocator"];
-      std::map<std::wstring, GenericElement> commandLists               = entryPair.second[L"X12CommandList"];
-      std::map<std::wstring, GenericElement> swapChains                 = entryPair.second[L"X12SwapChain3"];
-      std::map<std::wstring, GenericElement> outputs                    = entryPair.second[L"X12Output4"];
+      std::map<std::wstring, GenericElement> fences = entryPair.second[L"X12Fence"];
       for (auto & pair : fences) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> commandLists = entryPair.second[L"X12CommandList"];
       for (auto & pair : commandLists) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> commandAllocators = entryPair.second[L"X12CommandAllocator"];
       for (auto & pair : commandAllocators) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> pipelineStates = entryPair.second[L"X12PipelineState"];
       for (auto & pair : pipelineStates) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> rootSignatureDeserializers = entryPair.second[L"X12RootSignatureDeserializer"];
       for (auto & pair : rootSignatureDeserializers) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> rootSignatures = entryPair.second[L"X12RootSignature"];
       for (auto & pair : rootSignatures) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> blobs = entryPair.second[L"X12Blob"];
       for (auto & pair : blobs) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> descriptorHeaps = entryPair.second[L"X12DescriptorHeap"];
       for (auto & pair : descriptorHeaps) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> resources = entryPair.second[L"X12Resource"];
       for (auto & pair : resources) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> heaps = entryPair.second[L"X12Heap"];
       for (auto & pair : heaps) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> outputs = entryPair.second[L"X12Output4"];
       for (auto & pair : outputs) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> swapChains = entryPair.second[L"X12SwapChain3"];
       for (auto & pair : swapChains) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> commandQueues = entryPair.second[L"X12CommandQueue"];
       for (auto & pair : commandQueues) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> devices = entryPair.second[L"X12Device3"];
       for (auto & pair : devices) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> adapters = entryPair.second[L"X12Adapter3"];
       for (auto & pair : adapters) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
       }
+    }
+    for (auto & entryPair : globalCache) {
+      std::map<std::wstring, GenericElement> factories = entryPair.second[L"X12Factory4"];
       for (auto & pair : factories) {
         void * handle = pair.second.value.p;
         x12Release(handle, __FILE__, __LINE__);
