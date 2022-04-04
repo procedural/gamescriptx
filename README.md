@@ -1,6 +1,6 @@
 # Game Script X
 
-## WinPixEventRuntime (for `pix3.h`)
+## WinPixEventRuntime (for `pix3.h`, rename `.nupkg` to `.zip`, extract `bin` and `include` folders)
 
 https://www.nuget.org/api/v2/package/WinPixEventRuntime/
 
