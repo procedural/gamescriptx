@@ -134,7 +134,7 @@ __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
     D3D12_RESOURCE_DESC desc = {};
     desc.Dimension          = D3D12_RESOURCE_DIMENSION_BUFFER;
     desc.Alignment          = 0;
-    desc.Width              = 128;
+    desc.Width              = 64;
     desc.Height             = 1;
     desc.DepthOrArraySize   = 1;
     desc.MipLevels          = 1;
@@ -147,17 +147,13 @@ __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
     x12ObjectSetName(arrayConstantBufferCameraMatrices, L"arrayConstantBufferCameraMatrices", __FILE__, __LINE__);
     D3D12_RANGE range = {};
     range.Begin = 0;
-    range.End   = 128;
+    range.End   = 64;
     x12ResourceMap(arrayConstantBufferCameraMatrices, 0, &range, &arrayConstantBufferCameraMatricesMemoryPointer, __FILE__, __LINE__);
     const float arrayConstantBufferCameraMatricesData[] = {
       1.0978291,   0.219721511,-0.599208534, -0.596811712,
       0,          -1.69420147, -0.208746701, -0.207911715,
      -0.84544158,  0.285314411,-0.778088748, -0.774976432,
       0,           0,           2.97696114,   3.06505346,
-      0.571785212,-0,          -0.440334648, -4.94717995e-007,
-      0.073240526,-0.564733446, 0.0951047391, 0,
-      -18.2194118,-6.34710836, -23.6584053,  -9.9599905,
-      17.6957684,  6.16468668,  22.9784412,   9.99998951
     };
     float * p = (float *)arrayConstantBufferCameraMatricesMemoryPointer;
     for (unsigned i = 0; i < _countof(arrayConstantBufferCameraMatricesData); i += 1) {
@@ -448,7 +444,7 @@ __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
     srvDesc.Shader4ComponentMapping    = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
     srvDesc.Buffer.FirstElement        = 0;
     srvDesc.Buffer.NumElements         = 1;
-    srvDesc.Buffer.StructureByteStride = 128;
+    srvDesc.Buffer.StructureByteStride = 64;
     srvDesc.Buffer.Flags               = D3D12_BUFFER_SRV_FLAG_NONE;
     x12DeviceCreateShaderResourceView(device, arrayConstantBufferCameraMatrices, &srvDesc, arrayConstantBufferCameraMatricesSrvCpuDescriptorCBVSRVUAV, __FILE__, __LINE__);
     globalCacheSetAsP(L"", L"X12DescriptorHeap", L"arrayConstantBufferCameraMatricesSrvCpuHeapCBVSRVUAV", arrayConstantBufferCameraMatricesSrvCpuHeapCBVSRVUAV);

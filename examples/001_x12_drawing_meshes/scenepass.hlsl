@@ -1,6 +1,5 @@
 struct CameraMatrices {
   matrix<float, 4, 4> viewProj;
-  matrix<float, 4, 4> viewProjInv;
 };
 
 struct LightMatrices {
