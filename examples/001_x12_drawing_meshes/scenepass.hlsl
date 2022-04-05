@@ -37,36 +37,7 @@ interpolated VSMain(uint vid: SV_VertexID, uint iid: SV_InstanceID) {
   interpolated output;
   output.worldNormal = normal.xyz;
   output.worldPos = position.xyz;
-  {
-    float a = camera[0].viewProj._m00;
-    float b = camera[0].viewProj._m01;
-    float c = camera[0].viewProj._m02;
-    float d = camera[0].viewProj._m03;
-    float e = camera[0].viewProj._m10;
-    float f = camera[0].viewProj._m11;
-    float g = camera[0].viewProj._m12;
-    float h = camera[0].viewProj._m13;
-    float i = camera[0].viewProj._m20;
-    float j = camera[0].viewProj._m21;
-    float k = camera[0].viewProj._m22;
-    float l = camera[0].viewProj._m23;
-    float m = camera[0].viewProj._m30;
-    float n = camera[0].viewProj._m31;
-    float o = camera[0].viewProj._m32;
-    float p = camera[0].viewProj._m33;
-    
-    float x = output.worldPos.x;
-    float y = output.worldPos.y;
-    float z = output.worldPos.z;
-    float w = 1.0f;
-    
-    output.position.x = x*a + y*b + z*c + w*d;
-    output.position.y = x*e + y*f + z*g + w*h;
-    output.position.z = x*i + y*j + z*k + w*l;
-    output.position.w = x*m + y*n + z*o + w*p;
-    
-    //output.position = mul(camera[0].viewProj, float4(output.worldPos.x, output.worldPos.y, output.worldPos.z, 1.0f));
-  }
+  output.position = mul(camera[0].viewProj, float4(output.worldPos.x, output.worldPos.y, output.worldPos.z, 1.0f));
   output.position.y = -output.position.y;
   return output;
 }
