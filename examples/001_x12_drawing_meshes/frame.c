@@ -149,17 +149,17 @@ __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
     range.Begin = 0;
     range.End   = 128;
     x12ResourceMap(arrayConstantBufferCameraMatrices, 0, &range, &arrayConstantBufferCameraMatricesMemoryPointer, __FILE__, __LINE__);
-    const unsigned arrayConstantBufferCameraMatricesData[] = {
-      1066173866, 1046544045, 3206112699, 3206072487,
-      0,          3218660248, 3193291186, 3193235151,
-      3210243804, 1049760955, 3209113811, 3209061595,
-      0,          0,          1077839496, 1078208982,
-      1058168964, 2147483648, 3202446219, 3036990659,
-      1033240353, 3205534303, 1036174918, 0,
-      3247554907, 3234536323, 3250406506, 3240057887,
-      1099796719, 1086670109, 1102566361, 1092616181,
+    const float arrayConstantBufferCameraMatricesData[] = {
+      1.0978291,   0.219721511,-0.599208534, -0.596811712,
+      0,          -1.69420147, -0.208746701, -0.207911715,
+     -0.84544158,  0.285314411,-0.778088748, -0.774976432,
+      0,           0,           2.97696114,   3.06505346,
+      0.571785212,-0,          -0.440334648, -4.94717995e-007,
+      0.073240526,-0.564733446, 0.0951047391, 0,
+      -18.2194118,-6.34710836, -23.6584053,  -9.9599905,
+      17.6957684,  6.16468668,  22.9784412,   9.99998951
     };
-    unsigned * p = (unsigned *)arrayConstantBufferCameraMatricesMemoryPointer;
+    float * p = (float *)arrayConstantBufferCameraMatricesMemoryPointer;
     for (unsigned i = 0; i < _countof(arrayConstantBufferCameraMatricesData); i += 1) {
       p[i] = arrayConstantBufferCameraMatricesData[i];
     }
@@ -194,17 +194,17 @@ __declspec(dllexport) int frame(int recompileRequested, void * dataFromMain) {
     range.Begin = 0;
     range.End   = 128;
     x12ResourceMap(arrayConstantBufferLightMatrices, 0, &range, &arrayConstantBufferLightMatricesMemoryPointer, __FILE__, __LINE__);
-    unsigned arrayConstantBufferLightMatricesData[] = {
-      1041002566, 3217403029, 1055206351, 1055146275,
-      0,          3209055224, 3211125912, 3211065647,
-      1071448483, 1039874402, 3172049017, 3172010842,
-      0,          1035245100, 1093902865, 1093960633,
-      1027293291, 3025435414, 1058231951, 2147483648,
-      3204696143, 3196334732, 1025997743, 0,
-      1111921480, 3267983338, 3229376151, 3240057937,
-      3259340525, 1120435481, 1081810399, 1092616233,
+    float arrayConstantBufferLightMatricesData[] = {
+      0.137147039, -1.54432929,     0.447599858,  0.445809454,
+      0,           -0.774596691,   -0.898019314, -0.89442724,
+      1.72661245,   0.122668043,   -0.0355534293,-0.0354112163,
+      0,            0.0881770551,   11.227067,    11.2821589,
+      0.0457157306,-1.9788817e-007, 0.575539529, -0,
+     -0.514775217, -0.258198142,    0.0408894382, 0,
+      49.6438293,  -100.734207,    -3.94327331,  -9.96003819,
+     -49.3973885,   100.244331,     3.92369819,   10.0000391
     };
-    unsigned * p = (unsigned *)arrayConstantBufferLightMatricesMemoryPointer;
+    float * p = (float *)arrayConstantBufferLightMatricesMemoryPointer;
     for (unsigned i = 0; i < _countof(arrayConstantBufferLightMatricesData); i += 1) {
       p[i] = arrayConstantBufferLightMatricesData[i];
     }
