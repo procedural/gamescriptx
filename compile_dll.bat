@@ -1,3 +1,4 @@
+call compile_hlsl.bat
 del gamescriptx_frame.dll
 if 0 == 1 (
   :: Debug
