@@ -2207,6 +2207,7 @@ X12_DECLSPEC HRESULT  x12CommandListClose                                 (X12Co
 
 // Calls recording
 
+X12_DECLSPEC void     x12CommandListCopyResource                          (X12CommandList * pCommandList, X12Resource * pDstResource, X12Resource * pSrcResource);
 X12_DECLSPEC void     x12CommandListCopyBufferRegion                      (X12CommandList * pCommandList, X12Resource * pDstBuffer, uint64_t DstOffset, X12Resource * pSrcBuffer, uint64_t SrcOffset, uint64_t NumBytes);
 X12_DECLSPEC void     x12CommandListClearUnorderedAccessViewUint          (X12CommandList * pCommandList, D3D12_GPU_DESCRIPTOR_HANDLE ViewGPUHandleInCurrentHeap, D3D12_CPU_DESCRIPTOR_HANDLE ViewCPUHandle, X12Resource * pResource, const unsigned Values[4], unsigned NumRects, const D3D12_RECT * pRects);
 X12_DECLSPEC void     x12CommandListClearUnorderedAccessViewFloat         (X12CommandList * pCommandList, D3D12_GPU_DESCRIPTOR_HANDLE ViewGPUHandleInCurrentHeap, D3D12_CPU_DESCRIPTOR_HANDLE ViewCPUHandle, X12Resource * pResource, const float Values[4], unsigned NumRects, const D3D12_RECT * pRects);
